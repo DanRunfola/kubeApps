@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: conda
+spec:
+  restartPolicy: OnFailure
+  volumes:
+    - name: home-volume
+      persistentVolumeClaim:
+        claimName: dsmillerrunfol-rwm
+  containers:
+    - name: conda-container
+      image: "condaforge/mambaforge"
+      resources:
+        requests:
+          memory: "8Gi"
+          cpu: "2"
+      volumeMounts:
+        - name: home-volume
+          mountPath: /kube/home/
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          echo "Sleeping indefinitely..."
+          sleep infinity
