@@ -5,8 +5,10 @@ def callback(ch, method, properties, body):
     print(f" [x] Received {body}")
 
 # Replace with your RabbitMQ service name and port
-rabbitmq_service = os.getenv('RABBITMQ_SERVICE', 'rabbitmq')
-rabbitmq_port = os.getenv('RABBITMQ_PORT', 5672)
+rabbitmq_service = os.getenv('RABBITMQ_SERVICE')
+rabbitmq_port = os.getenv('RABBITMQ_PORT')
+print(rabbitmq_service)
+print(rabbitmq_port)
 
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host=rabbitmq_service, port=rabbitmq_port))
