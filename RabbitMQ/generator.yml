@@ -22,5 +22,5 @@ spec:
       args:
         - |
           cd /kube/home/git/kubeApps/RabbitMQ/
-          conda install pika
+          source activate /kube/home/.envs/rabbitmq
           python queueGenerator.py
