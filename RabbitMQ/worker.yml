@@ -4,7 +4,7 @@ metadata:
   name: rabbitmq-worker
 spec:
   volumes:
-    - name: kubeHome
+    - name: kubehome
       persistentVolumeClaim:
         claimName: dsmillerrunfol-rwm
   containers:
@@ -16,7 +16,7 @@ spec:
         - name: RABBITMQ_PORT
           value: "5672"      # Replace with your RabbitMQ port
       volumeMounts:
-        - name: kubeHome
+        - name: kubehome
           mountPath: /kube/home  
       command: ["/bin/sh", "-c"]
       args:
