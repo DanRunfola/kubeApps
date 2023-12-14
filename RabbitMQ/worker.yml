@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: rabbitmq-worker
+  name: rmq-worker
 spec:
   volumes:
     - name: kubehome
@@ -9,7 +9,7 @@ spec:
         claimName: dsmillerrunfol-rwm
   containers:
     - name: producer
-      image: your-producer-image
+      image: "condaforge/mambaforge"
       env:
         - name: RABBITMQ_SERVICE
           value: "rabbitmq"  # Replace with your RabbitMQ service name
@@ -22,4 +22,5 @@ spec:
       args:
         - |
           cd /kube/home/git/kubeApps/RabbitMQ/
+          pip install pika
           python worker.py
