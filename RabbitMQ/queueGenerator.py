@@ -4,6 +4,8 @@ import os
 # Replace with your RabbitMQ service name and port
 rabbitmq_service = os.getenv('RABBITMQ_SERVICE', 'rabbitmq')
 rabbitmq_port = os.getenv('RABBITMQ_PORT', 5672)
+print(rabbitmq_service)
+print(rabbitmq_port)
 
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host=rabbitmq_service, port=rabbitmq_port))
