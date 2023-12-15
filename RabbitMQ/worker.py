@@ -24,7 +24,7 @@ channel = connection.channel()
 
 print("Declaring Queue")
 
-channel.queue_declare(queue='exampleMessageQueue')
+channel.queue_declare(queue='exampleMessageQueue', durable=True) #Indicate we're working with a durable queue
 
 
 print("Defining Consumption Strategy")
