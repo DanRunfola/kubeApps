@@ -27,10 +27,9 @@ for i in range(0,100):
             exchange='',
             routing_key='exampleMessageQueue',
             body='RUNID_'+runID+":"+parameter,
-            properties=pika.BasicProperties(
-                delivery_mode=2,  # make message persistent
-                mandatory=True #message must be routed to a queue
-            ))
+            properties=pika.BasicProperties(delivery_mode=2),  # make message persistent
+            mandatory=True #message must be routed to a queue
+            ):
             print(str(RUNID) + ": message published succesfully")
         else:
             print("Message could not be confirmed")
