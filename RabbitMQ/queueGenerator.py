@@ -11,11 +11,18 @@ connection = pika.BlockingConnection(
     pika.ConnectionParameters(host=rabbitmq_service, port=rabbitmq_port))
 channel = connection.channel()
 
-channel.queue_declare(queue='hello')
+#Durable ensures that RMQ retains the message until a worker node has received it,
+#even across restarts of the RMQ server.
+channel.queue_declare(queue='exampleMessageQueue', durable=True)
 
-channel.basic_publish(exchange='',
-                      routing_key='hello',
-                      body='Hello World!')
-print(" [x] Sent 'Hello World!'")
+channel.basic_publish(
+    exchange='',
+    routing_key='exampleMessageQueue',
+    body='RUNID_01:1,0,10,200,10,20,30',
+    properties=pika.BasicProperties(
+        delivery_mode=2,  # make message persistent
+    ))
+
+print(" [x] Sent Message to RMQ Server, into queue exampleMessageQueue.")
 
 connection.close()
