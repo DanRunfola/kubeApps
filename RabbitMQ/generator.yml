@@ -27,6 +27,5 @@ spec:
       args:
         - |
           cd /kube/home/git/kubeApps/RabbitMQ/
-          git pull
           source activate /kube/home/.envs/rabbitmq
           python queueGenerator.py
