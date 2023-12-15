@@ -10,11 +10,6 @@ spec:
   containers:
     - name: producer
       image: "condaforge/mambaforge"
-      env:
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
       resources:
         requests:
           memory: "8Gi"
@@ -24,6 +19,10 @@ spec:
           value: "rabbitmq"  # Replace with your RabbitMQ service name
         - name: RABBITMQ_PORT
           value: "5672"      # Replace with your RabbitMQ port
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       volumeMounts:
         - name: kubehome
           mountPath: /kube/home  
