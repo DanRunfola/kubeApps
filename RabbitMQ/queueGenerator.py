@@ -1,5 +1,6 @@
 import pika
 import os
+import random
 
 # Replace with your RabbitMQ service name and port
 rabbitmq_service = os.getenv('RABBITMQ_SERVICE')
@@ -15,13 +16,17 @@ channel = connection.channel()
 #even across restarts of the RMQ server.
 channel.queue_declare(queue='exampleMessageQueue', durable=True)
 
-channel.basic_publish(
-    exchange='',
-    routing_key='exampleMessageQueue',
-    body='RUNID_01:1,0,10,200,10,20,30',
-    properties=pika.BasicProperties(
-        delivery_mode=2,  # make message persistent
-    ))
+#Create 100 messages, each with a different parameter set:
+for i in range(0,100):
+    parameter = str(random.random())
+    runID = str(i)
+    channel.basic_publish(
+        exchange='',
+        routing_key='exampleMessageQueue',
+        body='RUNID_'+runID+":"+parameter,
+        properties=pika.BasicProperties(
+            delivery_mode=2,  # make message persistent
+        ))
 
 print(" [x] Sent Message to RMQ Server, into queue exampleMessageQueue.")
 

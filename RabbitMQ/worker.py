@@ -1,16 +1,20 @@
 import pika
 import os
+import time
+
+
 
 def lo(message):
-    with open("/kube/home/test", "a") as f:
-        f.write(message + "\n")
-
+    podName = os.getenv('POD_NAME')
+    with open("/kube/home/logs/exampleRMQ/" + str(podName), "a") as f:
+        f.write(str(podName) + ":" + str(message) + "\n")
 
 
 lo("Script initialized.")
 
 def callback(ch, method, properties, body):
     lo(" [x] Received " + str(body))
+    time.sleep(10)
     lo("Deleting message with tag: " + str(method.delivery_tag))
     ch.basic_ack(delivery_tag=method.delivery_tag) #Delete the message from the queue after processing is complete.
 
@@ -39,5 +43,5 @@ channel.basic_consume(queue='exampleMessageQueue',
                                       #Note only one node can check out a queue item at any given time.
                       on_message_callback=callback)
 
-lo(' [*] Waiting for messages. To exit press CTRL+C')
+lo(' Waiting for messages.')
 channel.start_consuming()

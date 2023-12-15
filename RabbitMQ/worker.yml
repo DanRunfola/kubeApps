@@ -10,6 +10,11 @@ spec:
   containers:
     - name: producer
       image: "condaforge/mambaforge"
+      env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       resources:
         requests:
           memory: "8Gi"
