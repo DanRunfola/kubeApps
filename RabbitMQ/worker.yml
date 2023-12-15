@@ -27,5 +27,7 @@ spec:
         - |
           cd /kube/home/git/kubeApps/RabbitMQ/
           git pull
+          echo "Activating."
           source activate /kube/home/.envs/rabbitmq
+          echo "Activated, running python process."
           python worker.py
