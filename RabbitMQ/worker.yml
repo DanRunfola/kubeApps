@@ -10,6 +10,10 @@ spec:
   containers:
     - name: producer
       image: "condaforge/mambaforge"
+      resources:
+        requests:
+          memory: "8Gi"
+          cpu: "1"
       env:
         - name: RABBITMQ_SERVICE
           value: "rabbitmq"  # Replace with your RabbitMQ service name

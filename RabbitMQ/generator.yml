@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: rmq-generator
 spec:
+  restartPolicy: Never
   volumes:
     - name: kubehome
       persistentVolumeClaim:
@@ -10,6 +11,10 @@ spec:
   containers:
     - name: producer
       image: "condaforge/mambaforge"
+      resources:
+        requests:
+          memory: "8Gi"
+          cpu: "2"
       env:
         - name: RABBITMQ_SERVICE
           value: "rabbitmq"  # Replace with your RabbitMQ service name
