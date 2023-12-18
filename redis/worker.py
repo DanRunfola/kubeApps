@@ -5,10 +5,10 @@ import random
 import time
 
 # Connect to Redis
-redis_host = os.getenv('REDIS_SERVICE_HOST', 'localhost')
-redis_port = os.getenv('REDIS_SERVICE_PORT', 6379)
+redis_host = os.getenv('REDIS_SERVICE_HOST', 'redis')
+redis_port = os.getenv('REDIS_SERVICE_PORT', '6379')
 # Connect to Redis
-redis_client = redis.Redis(host=redis_host, port=redis_port, db=0, decode_responses=True)
+redis_client = redis.Redis(host=redis_host, port=redis_port, db=0, decode_responses=True, socket_timeout=10)
 
 def process_job(redis_client, queue_name, processing_queue_name):
     job = redis_client.brpoplpush(queue_name, processing_queue_name)
@@ -24,4 +24,4 @@ def process_job(redis_client, queue_name, processing_queue_name):
 
 # Process jobs
 while True:
-    process_job(redis_client, 'myexampleQueue', 'checkoutQueue')
+    process_job(redis_client, 'exampleQueue', 'checkoutQueue')
