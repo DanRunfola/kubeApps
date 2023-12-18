@@ -27,5 +27,7 @@ spec:
       args:
         - |
           cd /kube/home/git/kubeApps/redis/
-          conda activate /kube/home/.envs/redis
-          python queueGen.py
+          which python
+          source activate /kube/home/.envs/redis
+          which python
+          /kube/home/.envs/redis/bin/python queueGen.py
