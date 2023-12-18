@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: redis-worker-job
+spec:
+  parallelism: 3  # Number of parallel worker pods
+  template:
+    metadata:
+      name: redis-worker
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: kubehome
+          persistentVolumeClaim:
+            claimName: dsmillerrunfol-rwm
+      containers:
+        - name: producer
+          image: "condaforge/mambaforge"
+          resources:
+            requests:
+              memory: "8Gi"
+              cpu: "2"
+          env:
+            - name: REDIS_SERVICE_HOST
+              value: "redis"  # Assuming your Redis service is named 'redis'
+            - name: REDIS_SERVICE_PORT
+              value: "6379"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          volumeMounts:
+            - name: kubehome
+              mountPath: /kube/home
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              cd /kube/home/git/kubeApps/redis/
+              /kube/home/.envs/redis/bin/python worker.py
