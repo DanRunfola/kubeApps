@@ -3,6 +3,15 @@ import json
 import os
 import random
 import time
+import datetime
+
+#Simple logging direct to a directory
+def kLog(message):
+    podName = os.getenv('POD_NAME')
+    now = datetime.now()
+    timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
+    with open("/kube/home/logs/exampleRedis/" + str(podName), "a") as f:
+        f.write(str(timestamp) + " --- " + str(podName) + ":" + str(message) + "\n")
 
 # Connect to Redis
 redis_host = os.getenv('REDIS_SERVICE_HOST', 'redis')
@@ -15,12 +24,12 @@ def process_job(redis_client, queue_name, processing_queue_name):
 
     try:
         # Process the job
-        print(f"Processing job: {job}")
+        kLog(f"Processing job: {job}")
         time.sleep(10)
         # Remove the job from the processing list
         redis_client.lrem(processing_queue_name, 1, job)
     except Exception as e:
-        print(f"Error processing job: {e}")
+        kLog(f"Error processing job: {e}")
 
 # Process jobs
 while True:

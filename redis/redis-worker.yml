@@ -20,6 +20,10 @@ spec:
           value: "redis"  # Assuming your Redis service is named 'redis'
         - name: REDIS_SERVICE_PORT
           value: "6379"
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       volumeMounts:
         - name: kubehome
           mountPath: /kube/home  
