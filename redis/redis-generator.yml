@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-generator
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: kubehome
+      persistentVolumeClaim:
+        claimName: dsmillerrunfol-rwm
+  containers:
+    - name: producer
+      image: "condaforge/mambaforge"
+      resources:
+        requests:
+          memory: "8Gi"
+          cpu: "2"
+      env:
+        - name: REDIS_SERVICE_HOST
+          value: "redis"  # Assuming your Redis service is named 'redis'
+        - name: REDIS_SERVICE_PORT
+          value: "6379"
+      volumeMounts:
+        - name: kubehome
+          mountPath: /kube/home  
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          cd /kube/home/git/kubeApps/redis/
+          source activate /kube/home/.envs/redis
+          python queueGen.py
