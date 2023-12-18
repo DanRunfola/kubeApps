@@ -3,7 +3,7 @@ import json
 import os
 import random
 import time
-import datetime
+from datetime import datetime
 
 #Simple logging direct to a directory
 def kLog(message):
