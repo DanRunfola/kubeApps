@@ -1,42 +1,37 @@
-apiVersion: batch/v1
+apiVersion: v1
 kind: Job
 metadata:
   name: rmq-worker
 spec:
-  parallelism: 2  # Run two pods in parallel
-  template:
-    metadata:
-      name: rmq-worker
-    spec:
-      volumes:
+  volumes:
+    - name: kubehome
+      persistentVolumeClaim:
+        claimName: dsmillerrunfol-rwm
+  containers:
+    - name: producer
+      image: "condaforge/mambaforge"
+      resources:
+        requests:
+          memory: "8Gi"
+          cpu: "1"
+      env:
+        - name: RABBITMQ_SERVICE
+          value: "rabbitmq"  # Replace with your RabbitMQ service name
+        - name: RABBITMQ_PORT
+          value: "5672"      # Replace with your RabbitMQ port
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      volumeMounts:
         - name: kubehome
-          persistentVolumeClaim:
-            claimName: dsmillerrunfol-rwm
-      containers:
-        - name: producer
-          image: "condaforge/mambaforge"
-          resources:
-            requests:
-              memory: "8Gi"
-              cpu: "1"
-          env:
-            - name: RABBITMQ_SERVICE
-              value: "rabbitmq"  # RabbitMQ service name
-            - name: RABBITMQ_PORT
-              value: "5672"      # RabbitMQ port
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name  # Dynamically set to pod name
-          volumeMounts:
-            - name: kubehome
-              mountPath: /kube/home
-          command: ["/bin/bash", "-c"]
-          args:
-            - |
-              cd /kube/home/git/kubeApps/RabbitMQ/
-              echo "Activating."
-              source activate /kube/home/.envs/rabbitmq
-              echo "Activated, running python process."
-              python worker.py
+          mountPath: /kube/home  
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          cd /kube/home/git/kubeApps/RabbitMQ/
+          echo "Activating."
+          source activate /kube/home/.envs/rabbitmq
+          echo "Activated, running python process."
+          python worker.py
       restartPolicy: Never
