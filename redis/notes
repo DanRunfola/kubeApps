@@ -1,0 +1,5 @@
+Requires a conda environment with Redis installed for python (used 3.11 for testing).
+Assumes conda environment is created with:
+conda create --prefix /kube/home/.envs/redis 
+
+This can be modified in the yml files.
