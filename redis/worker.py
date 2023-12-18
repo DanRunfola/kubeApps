@@ -27,14 +27,14 @@ def connect_to_redis_with_retry(redis_host, redis_port, max_retries=5, delay=2):
     retry_count = 0
     while retry_count < max_retries:
         try:
-            print(f"Attempt {retry_count + 1} to connect to Redis...")
+            kLog("Attempt " + str(retry_count + 1) + " to connect to Redis...")
             return redis.Redis(host=redis_host, port=redis_port, db=0, decode_responses=True, socket_timeout=10)
         except redis.exceptions.ConnectionError as e:
-            print(f"Connection failed: {e}")
+            kLog("Connection failed: " + str(e))
             time.sleep(delay)
             retry_count += 1
 
-    print(f"Failed to connect to Redis after {max_retries} attempts.")
+    kLog("Failed to connect to Redis after all retries.")
     return None
 
 redis_host = os.getenv('REDIS_SERVICE_HOST', 'redis')
