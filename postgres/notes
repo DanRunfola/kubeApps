@@ -1,0 +1,7 @@
+For initial database setup, you need to select some sort of DB name/user/password.
+You can set these to whatever you want, using the below.  
+
+kubectl create secret generic postgres-secret \
+  --from-literal=database=mydatabase \
+  --from-literal=username=myuser \
+  --from-literal=password=mypassword

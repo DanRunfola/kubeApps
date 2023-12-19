@@ -36,7 +36,7 @@ redis_port = os.getenv('REDIS_SERVICE_PORT', 6379)
 r = connect_to_redis_with_retry(redis_host, redis_port)
 
 # Example usage
-for i in range(0,100):
+for i in range(0,5000):
     param = random.random()
     enqueue_job('exampleQueue', {'ID': str(i), 'parameters': str(param)})
     print("Queued job ID: " + str(i))

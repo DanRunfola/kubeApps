@@ -1,0 +1,16 @@
+Breaking Issues:
+
+Intermittent failure to mount devices causing pod's to not get past "ContainerInitializing" stage:
+17m         Warning   FailedMount              pod/redis-worker             MountVolume.MountDevice failed for volume "pvc-508d02f6-d04a-4782-b8d7-9a3f8dfdb509" : rpc error: code = DeadlineEx
+ceeded desc = context deadline exceeded
+
+Intermittent failure for DNS to resolve inside pods.  Will work for some identical pods inside a job, not others.  Sometimes fails for individual pods.
+redis.exceptions.ConnectionError: Error -2 connecting to redis:6379. Name or service not known.
+
+
+
+
+Issues that are less important:
+Intermittend failure for volumes to mount - this normally resolves itsefl after a while:
+4m28s       Warning   FailedAttachVolume       pod/redis-worker-job-f9l9k   AttachVolume.Attach failed for volume "pvc-508d02f6-d04a-4782-b8d7-9a3f8dfdb509" : rpc error: code = NotFound desc = node w07.geo.sciclone.wm.edu not found
+
