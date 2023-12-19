@@ -14,23 +14,23 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:latest
+          image: bitnami/postgresql:latest
           env:
-            - name: POSTGRES_DB
+            - name: POSTGRESQL_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret  # Name of your secret
-                  key: database          # Key for the database name in your secret
-            - name: POSTGRES_USER
+                  name: postgres-secret
+                  key: database
+            - name: POSTGRESQL_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret  # Name of your secret
-                  key: username          # Key for the username in your secret
-            - name: POSTGRES_PASSWORD
+                  name: postgres-secret
+                  key: username
+            - name: POSTGRESQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret  # Name of your secret
-                  key: password          # Key for the password in your secret
+                  name: postgres-secret
+                  key: password
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           ports:
@@ -41,8 +41,8 @@ spec:
               subPath: databases/postgres/queue
           resources:
             requests:
-              cpu: "8"
-              memory: "16Gi"
+              cpu: "1"
+              memory: "2Gi"
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
