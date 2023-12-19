@@ -12,8 +12,6 @@ spec:
       labels:
         app: postgres-queue
     spec:
-      securityContext:
-        fsGroup: 1001
       containers:
         - name: postgres
           image: bitnami/postgresql:latest
@@ -43,8 +41,8 @@ spec:
               subPath: databases/postgres/queue
           resources:
             requests:
-              cpu: "1"
-              memory: "2Gi"
+              cpu: "8"
+              memory: "16Gi"
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
