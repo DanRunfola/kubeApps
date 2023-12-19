@@ -17,11 +17,20 @@ spec:
           image: postgres:latest
           env:
             - name: POSTGRES_DB
-              value: mydatabase
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret  # Name of your secret
+                  key: database          # Key for the database name in your secret
             - name: POSTGRES_USER
-              value: user
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret  # Name of your secret
+                  key: username          # Key for the username in your secret
             - name: POSTGRES_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret  # Name of your secret
+                  key: password          # Key for the password in your secret
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           ports:
@@ -29,15 +38,12 @@ spec:
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
+              subPath: databases/postgres/queue
           resources:
             requests:
               cpu: "1"
               memory: "2Gi"
-            limits:
-              cpu: "2"
-              memory: "4Gi"
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
             claimName: dsmillerrunfol-rwm
-            readOnly: false
