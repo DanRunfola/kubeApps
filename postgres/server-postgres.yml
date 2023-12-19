@@ -14,23 +14,23 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: bitnami/postgresql:latest
+          image: postgres:latest
           env:
-            - name: POSTGRESQL_DATABASE
+            - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: database
-            - name: POSTGRESQL_USERNAME
+                  name: postgres-secret  # Name of your secret
+                  key: database          # Key for the database name in your secret
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: username
-            - name: POSTGRESQL_PASSWORD
+                  name: postgres-secret  # Name of your secret
+                  key: username          # Key for the username in your secret
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: password
+                  name: postgres-secret  # Name of your secret
+                  key: password          # Key for the password in your secret
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           ports:
