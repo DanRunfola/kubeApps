@@ -12,6 +12,8 @@ spec:
       labels:
         app: postgres-queue
     spec:
+      securityContext:
+        fsGroup: 1001
       containers:
         - name: postgres
           image: bitnami/postgresql:latest
