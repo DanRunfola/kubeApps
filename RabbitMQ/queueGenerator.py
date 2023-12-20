@@ -2,10 +2,6 @@ import pika
 import os
 import random
 
-import pika
-import os
-import random
-
 # Replace with your RabbitMQ service name and port
 rabbitmq_service = os.getenv('RABBITMQ_SERVICE')
 rabbitmq_port = os.getenv('RABBITMQ_PORT')
