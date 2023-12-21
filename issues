@@ -28,7 +28,64 @@ Traceback (most recent call last):
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 socket.gaierror: [Errno -2] Name or service not known
 
+RABITMQ Example 2:
+  File "/kube/home/git/gefEnvSES/processing.py", line 174, in <module>
+    main()
+  File "/kube/home/git/gefEnvSES/processing.py", line 162, in main
+    connection = pika.BlockingConnection(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kube/home/.envs/gefSES/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 360, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kube/home/.envs/gefSES/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 451, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+  File "/kube/home/.envs/gefSES/lib/python3.12/site-packages/pika/adapters/utils/selector_ioloop_adapter.py", line 565, in _resolve
+    result = socket.getaddrinfo(self._host, self._port, self._family,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kube/home/.envs/gefSES/lib/python3.12/socket.py", line 963, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+
+MySQL:
+WARN: 2023-12-21 14:59:02 --- Attempt 1 failed: (2003, "Can't connect to MySQL server on 'mysql-service' ([Errno -3] Temporary failure in name resolution)")
+
+Note that services seem to fail entirely in some cases, resulting in:
+WARN: 2023-12-21 15:37:25 --- Attempt 3 failed: (2003, "Can't connect to MySQL server on 'mysql-service' ([Errno -2] Name or service not known)")
+WARN: 2023-12-21 15:37:38 --- Attempt 4 failed: (2003, "Can't connect to MySQL server on 'mysql-service' (timed out)")
+
+
 
 Intermittend failure for volumes to attach - this normally resolves itself after a while, but takes at least ~20 seconds:
 4m28s       Warning   FailedAttachVolume       pod/redis-worker-job-f9l9k   AttachVolume.Attach failed for volume "pvc-508d02f6-d04a-4782-b8d7-9a3f8dfdb509" : rpc error: code = NotFound desc = node w07.geo.sciclone.wm.edu not found
 
+
+Together, these errors lead to a mess when trying to diagnose why parallel jobs are failing - every single one of these "Errors" is a socket connection issue; every "Container Creating" is a failure to mount:
+ses-job-227cp     1/1     Running             0          2m7s
+ses-job-2q4lj     1/1     Running             0          2m7s
+ses-job-4j4xp     1/1     Running             0          2m7s
+ses-job-7dprr     1/1     Running             0          2m7s
+ses-job-9442q     1/1     Running             0          2m7s
+ses-job-dwlhk     0/1     Error               0          91s
+ses-job-fvbdb     1/1     Running             0          2m7s
+ses-job-hsksz     1/1     Running             0          2m7s
+ses-job-jwjqq     1/1     Running             0          2m7s
+ses-job-lg25r     0/1     Error               0          2m7s
+ses-job-lkbtm     1/1     Running             0          2m7s
+ses-job-nlh4p     0/1     ContainerCreating   0          2m7s
+ses-job-nqkwr     1/1     Running             0          2m7s
+ses-job-p9wsz     1/1     Running             0          2m7s
+ses-job-qgrvj     0/1     ContainerCreating   0          2m7s
+ses-job-qjsmp     1/1     Running             0          2m7s
+ses-job-qq5mv     1/1     Running             0          2m7s
+ses-job-r62h7     0/1     Error               0          91s
+ses-job-tdwc4     0/1     ContainerCreating   0          2m7s
+ses-job-v9l9t     1/1     Running             0          2m7s
+ses-job-vgkcf     1/1     Running             0          2m7s
+ses-job-vznph     1/1     Running             0          2m7s
+ses-job-w7nq6     1/1     Running             0          2m7s
+ses-job-wb976     1/1     Running             0          2m7s
+ses-job-wr77t     1/1     Running             0          2m7s
+ses-job-x2qnw     1/1     Running             0          2m7s
+ses-job-xj97n     0/1     Error               0          2m7s
