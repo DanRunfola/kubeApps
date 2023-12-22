@@ -61,7 +61,7 @@ Intermittend failure for volumes to attach - this normally resolves itself after
 4m28s       Warning   FailedAttachVolume       pod/redis-worker-job-f9l9k   AttachVolume.Attach failed for volume "pvc-508d02f6-d04a-4782-b8d7-9a3f8dfdb509" : rpc error: code = NotFound desc = node w07.geo.sciclone.wm.edu not found
 
 
-Together, these errors lead to a mess when trying to diagnose why parallel jobs are failing - every single one of these "Errors" is a socket connection issue; every "Container Creating" is a failure to mount:
+Together, these errors lead to a mess when trying to diagnose why parallel jobs are failing - every single one of these "Errors" is a socket connection/temporary resolution issue; every "Container Creating" is a failure to mount:
 ses-job-227cp     1/1     Running             0          2m7s
 ses-job-2q4lj     1/1     Running             0          2m7s
 ses-job-4j4xp     1/1     Running             0          2m7s
