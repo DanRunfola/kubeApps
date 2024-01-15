@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: osrmEX
+  name: osrm-ex
 spec:
   restartPolicy: OnFailure
   volumes:
@@ -21,6 +21,4 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         - |
-          ENV_PATH="/kube/home/.envs/osrm"
-          source activate $ENV_PATH
-          python /kube/home/git/kubeApps/openrouteservice/example.py
+          sleep 999999999
