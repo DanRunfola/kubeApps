@@ -15,7 +15,7 @@ spec:
         requests:
           memory: "8Gi"
           cpu: "2"
-        volumeMounts:
+      volumeMounts:
         - name: osm-data-volume
           mountPath: "/data/"
           subPath: git/kubeApps/openrouteservice/data
