@@ -13,10 +13,6 @@ spec:
             operator: NotIn
             values:
             - dss
-  volumes:
-    - name: home-volume
-      persistentVolumeClaim:
-        claimName: dsmillerrunfol-rwm
   containers:
     - name: curl-container
       image: "curlimages/curl:8.5.0"
@@ -24,9 +20,6 @@ spec:
         requests:
           memory: "1Gi"
           cpu: "1"
-      volumeMounts:
-        - name: home-volume
-          mountPath: /kube/home/
       command: ["/bin/sh", "-c"]
       args:
         - |
