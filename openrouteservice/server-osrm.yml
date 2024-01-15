@@ -30,6 +30,15 @@ spec:
       labels:
         app: osrm
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - dss
       containers:
       - name: osrm
         image: ghcr.io/project-osrm/osrm-backend:latest

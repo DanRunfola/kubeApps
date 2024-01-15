@@ -28,10 +28,10 @@ spec:
         - name: osm-data-volume
           mountPath: "/data/"
           subPath: git/kubeApps/openrouteservice/data
-      command: ["/bin/sh", "-c"]
+      command: ["/bin/bash", "-c"]
       args:
         - |
-          ENV_PATH="/kube/home/.envs/osrm"
-          source activate $ENV_PATH
           ls /data/
-          sleep 999999999999;
+          osrm-extract -p /opt/car.lua /data/nepal-latest.osm.pbf
+          osrm-partition /data/nepal-latest.osrm
+          osrm-customize /data/nepal-latest.osrm
