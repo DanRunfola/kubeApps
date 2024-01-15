@@ -1,0 +1,4 @@
+*.pbf filter=lfs diff=lfs merge=lfs -text
+*.osm filter=lfs diff=lfs merge=lfs -text
+*.osm.pbf filter=lfs diff=lfs merge=lfs -text
+openrouteservice/data/nepal-latest.osm.pbf filter=lfs diff=lfs merge=lfs -text
