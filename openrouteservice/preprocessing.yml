@@ -18,8 +18,8 @@ spec:
       persistentVolumeClaim:
         claimName: dsmillerrunfol-rwm
   containers:
-    - name: conda-container
-      image: "condaforge/mambaforge"
+    - name: osmr-preprocessing
+      image: ghcr.io/project-osrm/osrm-backend:latest
       resources:
         requests:
           memory: "8Gi"
