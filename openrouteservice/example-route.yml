@@ -21,6 +21,6 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         - |
-          ENV_PATH="/kube/home/.envs/gefSES"
+          ENV_PATH="/kube/home/.envs/osrm"
           source activate $ENV_PATH
           python /kube/home/git/kubeApps/openrouteservice/example.py
