@@ -4,6 +4,15 @@ metadata:
   name: curl
 spec:
   restartPolicy: Never
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: NotIn
+            values:
+            - dss
   volumes:
     - name: home-volume
       persistentVolumeClaim:
