@@ -34,4 +34,4 @@ spec:
           ENV_PATH="/kube/home/.envs/osrm"
           source activate $ENV_PATH
           ls /data/
-          osrm-extract -p /opt/car.lua /data/nepal-latest.osm.pbf
+          sleep 999999999999;
