@@ -27,9 +27,9 @@ spec:
       volumeMounts:
         - name: home-volume
           mountPath: /kube/home/
-      command: ["/bin/sh", "-c"]
+      command: ["/bin/bash", "-c"]
       args:
         - |
           ENV_PATH="/kube/home/.envs/osrm"
-          conda activate $ENV_PATH
+          source activate $ENV_PATH
           python /kube/home/git/kubeApps/openrouteservice/example.py
