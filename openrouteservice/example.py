@@ -18,8 +18,3 @@ headers = {
 r = requests.get(url, timeout=10, headers=headers, allow_redirects=False)
 res = r.json()
 print(res)
-
-
-url = "http://10.105.236.115:5000/route/v1/driving/27.718107,85.317312;27.706190,85.316324"
-
-10.105.236.115
