@@ -4,6 +4,9 @@ metadata:
   name: osm-preprocessing
 spec:
   restartPolicy: Never
+  nodeSelector:
+    kubernetes.io/hostname: 
+      notIn: [dss]
   volumes:
     - name: osm-data-volume
       persistentVolumeClaim:
