@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: osm-preprocessing
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: osm-data-volume
+      persistentVolumeClaim:
+        claimName: dsmillerrunfol-rwm
+  containers:
+    - name: conda-container
+      image: "condaforge/mambaforge"
+      resources:
+        requests:
+          memory: "8Gi"
+          cpu: "2"
+        volumeMounts:
+        - name: osm-data-volume
+          mountPath: "/data/"
+          subPath: git/kubeApps/openrouteservice/data
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          ENV_PATH="/kube/home/.envs/osrm"
+          source activate $ENV_PATH
+          ls /data/
+          osrm-extract -p /opt/car.lua /data/nepal-latest.osm.pbf
