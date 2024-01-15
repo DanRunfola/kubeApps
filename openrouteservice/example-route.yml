@@ -30,4 +30,6 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         - |
-          sleep 999999999
+          ENV_PATH="/kube/home/.envs/osrm"
+          conda activate $ENV_PATH
+          python /kube/home/git/kubeApps/openrouteservice/example.py
