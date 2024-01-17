@@ -15,6 +15,6 @@ headers = {
     'x-nba-stats-token': 'true'
 }
 
-r = requests.get(url, timeout=10, headers=headers, allow_redirects=False)
+r = requests.get(url, timeout=10, allow_redirects=False)
 res = r.json()
 print(res)
