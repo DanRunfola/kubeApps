@@ -33,5 +33,4 @@ spec:
         - |
           ENV_PATH="/kube/home/.envs/osrm"
           source activate $ENV_PATH
-          sleep 999999999
           python /kube/home/git/kubeApps/openrouteservice/example.py
