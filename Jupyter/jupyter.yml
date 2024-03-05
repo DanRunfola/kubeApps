@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jupytertest
+spec:
+  restartPolicy: Never
+  containers:
+    - name: jupyterlab
+      image: jupyter/datascience-notebook:latest
+      imagePullPolicy: IfNotPresent
+      ports:
+      - containerPort: 8888
+      command:
+        - /bin/bash
+        - -c
+        - |
+        start.sh jupyter lab --LabApp.token='password' --LabApp.ip='0.0.0.0' --LabApp.allow_root=True

@@ -60,6 +60,7 @@ WARN: 2023-12-21 15:37:38 --- Attempt 4 failed: (2003, "Can't connect to MySQL s
 Intermittend failure for volumes to attach - this normally resolves itself after a while, but takes at least ~20 seconds:
 4m28s       Warning   FailedAttachVolume       pod/redis-worker-job-f9l9k   AttachVolume.Attach failed for volume "pvc-508d02f6-d04a-4782-b8d7-9a3f8dfdb509" : rpc error: code = NotFound desc = node w07.geo.sciclone.wm.edu not found
 
+Warning  FailedMount  1s    kubelet            MountVolume.MountDevice failed for volume "pvc-508d02f6-d04a-4782-b8d7-9a3f8dfdb509" : rpc error: code = Internal desc = Get "http://longhorn-backend:9500/v1/volumes/pvc-508d02f6-d04a-4782-b8d7-9a3f8dfdb509": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
 Together, these errors lead to a mess when trying to diagnose why parallel jobs are failing - every single one of these "Errors" is a socket connection/temporary resolution issue; every "Container Creating" is a failure to mount:
 ses-job-227cp     1/1     Running             0          2m7s
@@ -89,3 +90,12 @@ ses-job-wb976     1/1     Running             0          2m7s
 ses-job-wr77t     1/1     Running             0          2m7s
 ses-job-x2qnw     1/1     Running             0          2m7s
 ses-job-xj97n     0/1     Error               0          2m7s
+
+
+Issues related to longhorn drivers:
+  ----     ------              ----  ----                     -------
+  Normal   Scheduled           8s    default-scheduler        Successfully assigned dsmillerrunfol/data-retrieval-osm to w07.geo.sciclone.wm.edu
+  Warning  FailedAttachVolume  7s    attachdetach-controller  AttachVolume.Attach failed for volume "pvc-508d02f6-d04a-4782-b8d7-9a3f8dfdb509" : CSINode w07.geo.sciclone.wm.edu does not contain driver driver.longhorn.io
+
+
+
