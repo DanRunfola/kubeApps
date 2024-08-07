@@ -4,10 +4,14 @@ metadata:
   name: conda
 spec:
   restartPolicy: OnFailure
+  securityContext:
+    runAsUser: 71032
+    runAsGroup: 9915
   volumes:
-    - name: home-volume
-      persistentVolumeClaim:
-        claimName: dsmillerrunfol-rwm
+    - name: geograd
+      nfs:
+        server: 128.239.59.144
+        path: /sciclone/geograd
   containers:
     - name: conda-container
       image: "condaforge/mambaforge"
@@ -16,8 +20,8 @@ spec:
           memory: "8Gi"
           cpu: "2"
       volumeMounts:
-        - name: home-volume
-          mountPath: /kube/home/
+        - name: geograd
+          mountPath: /sciclone/geograd/
       command: ["/bin/sh", "-c"]
       args:
         - |
