@@ -4,16 +4,20 @@ metadata:
   name: filestore
 spec:
   restartPolicy: Always
+  securityContext:
+    runAsUser: 71032
+    runAsGroup: 9915
   volumes:
-    - name: home-volume
-      persistentVolumeClaim:
-        claimName: dsmillerrunfol-rwm
+    - name: geograd
+      nfs:
+        server: 128.239.59.144
+        path: /sciclone/geograd
   containers:
     - name: conda-container
       image: "nvidia/samples:vectoradd-cuda11.2.1"
       volumeMounts:
-        - name: home-volume
-          mountPath: /kube/home/
+        - name: geograd
+          mountPath: /sciclone/geograd/
       command: ["/bin/sh", "-c"]
       args:
         - |
