@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: home-volume
+      persistentVolumeClaim:
+        claimName: dsmillerrunfol-rwm
+  containers:
+    - name: example
+      image: ghcr.io/d8a-science/wm-pytorch:latest
+      resources:
+        requests:
+          memory: "8Gi"
+          cpu: "2"
+      volumeMounts:
+        - name: home-volume
+          mountPath: /kube/home/
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          echo "Sleeping indefinitely..."
+          sleep infinity
